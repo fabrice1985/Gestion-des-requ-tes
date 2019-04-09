@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Inscription"
+    android:background="#ffffff">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/paramIns"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"/>
+    <EditText
+        android:id = "@+id/txtname"
+        android:layout_width ="match_parent"
+        android:layout_marginTop = "25dp"
+        android:ems = "10"
+        android:hint = "@string/name"
+        android:inputType = "text"
+        android:selectAllOnFocus = "true"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+    <EditText
+        android:id ="@+id/txtsurname"
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/surname"
+        android:inputType = "text"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+    <EditText
+        android:id ="@+id/txtmatricule"
+        android:layout_width ="match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/matricule"
+        android:inputType = "text"
+        android:textColor="#000000"
+        android:textSize="28sp"/>
+    <EditText
+        android:id ="@+id/txtfiliere"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/filiere"
+        android:inputType = "text"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+    <EditText
+        android:id ="@+id/txtlevel"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/level"
+        android:inputType = "text"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+    <EditText
+        android:id ="@+id/txtadress"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/email"
+        android:inputType = "text"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+    <EditText
+        android:id ="@+id/txtPwd1"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/mot_passe"
+        android:inputType = "textPassword"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+
+    <EditText
+        android:id ="@+id/txtPwd2"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:ems = "10"
+        android:hint = "@string/mot_passe"
+        android:inputType = "textPassword"
+        android:textColor="#000000"
+        android:textSize="25sp"/>
+    <Button
+        android:id = "@+id/btnInscription1"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:text = "@string/valideIns"
+        android:textSize="25dp"
+        android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>

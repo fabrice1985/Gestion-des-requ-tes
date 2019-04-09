@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">MyQuery</string>
+    <string name="login">Login ou Matricule</string>
+    <string name="mot_passe">Mot de passe : Password</string>
+    <string name="paramIns">Entrez les paramètres d\'inscription</string>
+    <string name="name">Nom : Name </string>
+    <string name="surname">Prénom : Surname</string>
+    <string name="matricule">Matricule : Registration number</string>
+    <string name="filiere">Filière : Course </string>
+    <string name="level">Niveau : Level</string>
+    <string name="email">Adresse Email: Mail Adress</string>
+    <string name="phone">Numéro de téléphone : Phone number</string>
+    <string name="valideIns">Validez Inscription</string>
+</resources>
