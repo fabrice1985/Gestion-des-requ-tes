@@ -1,37 +1,36 @@
 package myquerymodel;
 
 public class User {
-    private String matricule;
+    private String pseudo;
     private String nom;
     private String prenom;
     private String filiere;
     private String niveau;
     private String adressmail;
+    private String password;
     private String password1;
-    private String password2;
 
-    public User (String matricule, String nom, String prenom, String filiere, String niveau, String adressmail, String password1){
-        this.matricule = matricule;
+    public User (String pseudo, String nom, String prenom, String filiere, String niveau, String adressmail, String password){
+        this.pseudo = pseudo;
         this.nom = nom;
         this.prenom= prenom;
         this.filiere = filiere;
         this.niveau = niveau;
         this.adressmail = adressmail;
-        this.password1 = password1;
+        this.password = password1;
     }
 
-    public String getMatricule() {
-        return matricule;
+    public String getPseudo() {
+        return pseudo;
     }
 
-    public void setMatricule(String matricule) {
-        this.matricule = matricule;
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 
     public String getNom() {
         return nom;
     }
-
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -68,6 +67,14 @@ public class User {
         this.adressmail = adressmail;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getPassword1() {
         return password1;
     }
@@ -76,11 +83,4 @@ public class User {
         this.password1 = password1;
     }
 
-    public String getPassword2() {
-        return password2;
-    }
-
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
 }
