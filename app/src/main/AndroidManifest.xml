@@ -12,6 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Notes_exam"></activity>
+        <activity android:name=".EnregistrerDES" />
+        <activity android:name=".EnregistrerEnseignant" />
+        <activity android:name=".Compte_Administrateur" />
+        <activity android:name=".TraitementDES" />
+        <activity android:name=".Compte_DES" />
+        <activity android:name=".AutreRequete" />
+        <activity android:name=".TraitementEnseignant" />
+        <activity android:name=".Compte_Enseignant" />
+        <activity android:name=".RequetesNotes" />
+        <activity android:name=".Compte_Etudiant" />
         <activity android:name=".Inscription" />
         <activity android:name=".MainActivity">
             <intent-filter>

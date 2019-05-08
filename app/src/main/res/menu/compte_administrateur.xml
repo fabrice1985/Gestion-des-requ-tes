@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <item android:id="@+id/consulter"
+        android:title="Consulter compte">
+    <menu>
+        <item android:id="@+id/compte_etudiant"
+            android:title="Compte étudiant"/>
+        <item android:id="@+id/compte_enseignant"
+            android:title="Compte enseignant"/>
+        <item android:id="@+id/compte_DES"
+            android:title="Compte DES"/>
+    </menu>
+    </item>
+    <item android:id="@+id/enregitrerenseignant"
+        android:title="Enregistrer un enseignant"/>
+
+    <item android:id="@+id/enregistrerDES"
+        android:title="Enregistrer un agent de la DES"/>
+    <item android:id="@+id/supprimercompte"
+        android:title="Supprimer un compte"/>
+
+    <item android:id="@+id/modifiercompte"
+        android:title="Modifier un compte"/>
+
+    <item android:id="@+id/deconnecter"
+        android:title="Deconnexion" />
+</menu>

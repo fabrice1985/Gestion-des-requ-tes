@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TraitementEnseignant">
+    tools:context=".AutreRequete">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,16 +12,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/entrez_les_param_tres_de_traitermentde_la_requ_te"
+            android:text="Entrez les paramètres de la requête"
             android:textColor="#000000"
-            android:textAlignment="center"
             android:textStyle="italic"
             android:textSize="20sp"
             android:layout_gravity="center_horizontal"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/motif_choisir_1_pour_note_cc_2_note_tpe_3_note_examen"
+            android:text="@string/motif_choisir_1_pour_le_nom_2_le_prenom_3_la_dob"
             android:layout_marginTop = "25dp"
             android:textColor="#000000"
             android:textSize="15sp"
@@ -33,89 +32,7 @@
             android:textSize="15sp"
             android:entries="@array/listmotif">
         </Spinner>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nom_enseignant"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            />
-        <EditText
-            android:id ="@+id/txtnomenseignant"
-            android:layout_width ="match_parent"
-            android:layout_height = "wrap_content"
-            android:ems = "10"
-            android:hint = ""
-            android:inputType = "text"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Unité d'enseignement (code UE)"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            />
-        <EditText
-            android:id ="@+id/txtue"
-            android:layout_width ="match_parent"
-            android:layout_height = "wrap_content"
-            android:ems = "10"
-            android:hint = ""
-            android:inputType = "text"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Note traitée"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            />
-        <EditText
-            android:id ="@+id/txtnotetraiter"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:ems = "10"
-            android:hint = ""
-            android:inputType = "numberDecimal"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nom_etudiant"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            />
-
-        <EditText
-            android:id ="@+id/txtnometudiant"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:ems = "10"
-            android:hint = ""
-            android:inputType = "text"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/matricule_etudiant"
-            android:textColor="#000000"
-            android:textSize="15sp"
-            />
-
-        <EditText
-            android:id ="@+id/txtmatricule"
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:ems = "10"
-            android:hint = ""
-            android:inputType = "text"
-            android:textColor="#000000"
-            android:textSize="15sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -123,7 +40,6 @@
             android:textColor="#000000"
             android:textSize="15sp"
             />
-
         <Spinner
             android:id="@+id/spinnerfiliere"
             android:layout_width="match_parent"
@@ -134,11 +50,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/niveau"
+            android:text="Niveau"
             android:textColor="#000000"
             android:textSize="15sp"
             />
-
         <Spinner
             android:id="@+id/spinnerniveau"
             android:layout_width="match_parent"
@@ -146,14 +61,47 @@
             android:textSize="15sp"
             android:entries="@array/listniveau">
         </Spinner>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom, prenom ou date de naissance mal écris"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            />
+        <EditText
+            android:id ="@+id/txtavec_erreur"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:ems = "10"
+            android:hint = ""
+            android:inputType = "text"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nom, prénom ou date de naissance bien écris"
+            android:textColor="#000000"
+            android:textSize="15sp"
+            />
+        <EditText
+            android:id ="@+id/txtsans_erreur"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:ems = "10"
+            android:hint = ""
+            android:inputType = "text"
+            android:textColor="#000000"
+            android:textSize="15sp"/>
 
         <Button
-            android:id = "@+id/btntraitement"
+            android:id = "@+id/btnautrerequete"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "Envoyer"
             android:textSize="25dp"
             android:layout_gravity="center_horizontal"/>
     </LinearLayout>
+
 
 </ScrollView>

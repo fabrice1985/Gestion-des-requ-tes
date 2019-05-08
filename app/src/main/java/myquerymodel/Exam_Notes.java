@@ -1,32 +1,23 @@
 package myquerymodel;
 
-public class Teachers {
-    private String Motif;
+public class Exam_Notes {
+
     private String Matricule;
     private String Nom;
     private String Filiere;
     private String Niveau;
-    private String Note;
+    private String Note_attribue;
+    private String Note_valable;
     private String UE;
-    private String Enseignant;
 
-    public Teachers(String motif, String matricule, String nom, String filiere, String niveau, String note, String UE, String enseignant) {
-        Motif = motif;
+    public Exam_Notes(String matricule, String nom, String filiere, String niveau, String note_attribue, String note_valable, String UE) {
         Matricule = matricule;
         Nom = nom;
         Filiere = filiere;
         Niveau = niveau;
-        Note = note;
+        Note_attribue = note_attribue;
+        Note_valable = note_valable;
         this.UE = UE;
-        Enseignant = enseignant;
-    }
-
-    public String getMotif() {
-        return Motif;
-    }
-
-    public void setMotif(String motif) {
-        Motif = motif;
     }
 
     public String getMatricule() {
@@ -61,12 +52,20 @@ public class Teachers {
         Niveau = niveau;
     }
 
-    public String getNote() {
-        return Note;
+    public String getNote_attribue() {
+        return Note_attribue;
     }
 
-    public void setNote(String note) {
-        Note = note;
+    public void setNote_attribue(String note_attribue) {
+        Note_attribue = note_attribue;
+    }
+
+    public String getNote_valable() {
+        return Note_valable;
+    }
+
+    public void setNote_valable(String note_valable) {
+        Note_valable = note_valable;
     }
 
     public String getUE() {
@@ -76,14 +75,4 @@ public class Teachers {
     public void setUE(String UE) {
         this.UE = UE;
     }
-
-    public String getEnseignant() {
-        return Enseignant;
-    }
-
-    public void setEnseignant(String enseignant) {
-        Enseignant = enseignant;
-    }
 }
-
-

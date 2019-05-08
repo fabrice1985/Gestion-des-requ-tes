@@ -10,21 +10,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import myqueryServices.Connexion;
+import myquerymodel.ParamConnexion;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnInscription;
     private Button btnConnexion;
-    private EditText txtLogin;
-    private EditText txtPwd;
+    private EditText login;
+    private EditText password;
+    private String url = "http://192.168.8.100/MyQueryPHP/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnInscription = (Button)findViewById(R.id.btnInscription);
         btnConnexion = (Button)findViewById(R.id.btnConnexion);
-        txtLogin = (EditText)findViewById(R.id.txtLogin);
-        txtPwd = (EditText)findViewById(R.id.txtPwd);
-        // Se connecter à l'activité de création de compte
+        login = (EditText)findViewById(R.id.txtLogin);
+        password = (EditText)findViewById(R.id.txtPwd);
+        // Se connecter à l'activité de création de compte_etudiant
         btnInscription.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,11 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        // Se connecter à son compte
+        // Se connecter à son compte_etudiant
       btnConnexion.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
               seConnecter();
+
              // Intent intent = new Intent (MainActivity.this, Compte_etudiant.class);
               //startActivity(intent);
           }
@@ -57,17 +69,62 @@ public class MainActivity extends AppCompatActivity {
     }
     // vérifier si les champs de saisies sont non vides
     public void verifierSichampnonvide(){
-        if ((txtLogin.getText().length()==0)||(txtPwd.getText().length()==0)){
+        if ((login.getText().length()==0)||(password.getText().length()==0)){
             Toast.makeText(this,"certain(s) champ(s) sont vides veuillez remplir tous les champs",Toast.LENGTH_LONG).show();
-            txtLogin.getText().clear();
-            txtPwd.getText().clear();
+            login.getText().clear();
+            password.getText().clear();
 
         }
         else{
             Toast.makeText(this,"bravo vos paramètres de connexion sont bons",Toast.LENGTH_LONG).show();
-            /*String login = txtLogin.getText().toString();
-            String password = txtPwd.getText().toString();*/
+
+            ParamConnexion paramconnexion = new ParamConnexion(login.getText().toString(),
+                                                                password.getText().toString());
+             envoyerParamConnexion(paramconnexion);
+             String pseudo = login.getText().toString();
+             Intent intent = new Intent(MainActivity.this, Compte_Enseignant.class);
+             intent.putExtra("pseudo",pseudo);
+             startActivity(intent);
+
 
         }
     }
+    public void envoyerParamConnexion (ParamConnexion paramconnexion){
+
+        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+        if (BuildConfig.DEBUG) {
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        } else {
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
+        }
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(httpLoggingInterceptor);
+        // créons une instance de retrofit
+        Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
+                .client(httpClient.build())
+                .addConverterFactory(GsonConverterFactory.create());
+        Retrofit retrofit = builder.build();
+        Connexion client = retrofit.create(Connexion.class);
+        Call<ParamConnexion> call = client.createConnexion(paramconnexion);
+        //Toast.makeText(this,"URL envoyée",Toast.LENGTH_LONG).show();
+        call.enqueue(new Callback<ParamConnexion>() {
+            @Override
+            public void onResponse(Call<ParamConnexion> call, Response<ParamConnexion> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, "user matricule", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "reponse non OK", Toast.LENGTH_LONG).show();
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<ParamConnexion> call, Throwable t) {
+
+                Toast.makeText(MainActivity.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
 }

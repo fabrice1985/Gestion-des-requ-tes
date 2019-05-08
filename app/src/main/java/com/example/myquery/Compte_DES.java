@@ -1,19 +1,19 @@
 package com.example.myquery;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class Compte_Enseignant extends AppCompatActivity {
+public class Compte_DES extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compte__enseignant);
+        setContentView(R.layout.activity_compte__des);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -27,9 +27,9 @@ public class Compte_Enseignant extends AppCompatActivity {
 
         switch (item.getItemId()){
 
-            case R.id.traiterparenseignant:
+            case R.id.traiterpardes:
                 Toast.makeText(this, "depot requête",Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(Compte_Enseignant.this,TraitementEnseignant.class);
+                Intent intent = new Intent(Compte_DES.this,TraitementDES.class);
                 startActivity(intent);
                 return true;
             case R.id.consulter:
@@ -37,7 +37,7 @@ public class Compte_Enseignant extends AppCompatActivity {
                 return true;
             case R.id.deconnecter:
                 Toast.makeText(this, "deconnecter",Toast.LENGTH_LONG).show();
-                Intent intent1 = new Intent(Compte_Enseignant.this,MainActivity.class);
+                Intent intent1 = new Intent(Compte_DES.this,MainActivity.class);
                 startActivity(intent1);
                 return true;
             default:

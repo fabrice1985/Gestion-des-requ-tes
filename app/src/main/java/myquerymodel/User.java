@@ -1,14 +1,31 @@
 package myquerymodel;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
+    @SerializedName("pseudo")
+    @Expose
     private String pseudo;
+    @SerializedName("nom")
+    @Expose
     private String nom;
+    @SerializedName("prenom")
+    @Expose
     private String prenom;
+    @SerializedName("filiere")
+    @Expose
     private String filiere;
+    @SerializedName("niveau")
+    @Expose
     private String niveau;
+    @SerializedName("adressmail")
+    @Expose
     private String adressmail;
+    @SerializedName("password")
+    @Expose
     private String password;
-    private String password1;
+   // private String password1;
 
     public User (String pseudo, String nom, String prenom, String filiere, String niveau, String adressmail, String password){
         this.pseudo = pseudo;
@@ -17,7 +34,7 @@ public class User {
         this.filiere = filiere;
         this.niveau = niveau;
         this.adressmail = adressmail;
-        this.password = password1;
+        this.password = password;
     }
 
     public String getPseudo() {
@@ -75,12 +92,6 @@ public class User {
         this.password = password;
     }
 
-    public String getPassword1() {
-        return password1;
-    }
 
-    public void setPassword1(String password1) {
-        this.password1 = password1;
-    }
 
 }

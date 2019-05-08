@@ -7,6 +7,6 @@ import retrofit2.http.POST;
 
 public interface UserClient {
 
-@POST("user")
+@POST("Inscription.php/")
 Call<User> createAccount(@Body User user);
 }

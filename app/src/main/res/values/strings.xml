@@ -11,4 +11,60 @@
     <string name="email">Adresse Email: Mail Adress</string>
     <string name="phone">Numéro de téléphone : Phone number</string>
     <string name="valideIns">Validez Inscription</string>
+    <string name="notes">Entrez 1 pour note CC, 2 pour note TPE, 3 pour note examen</string>
+    <string name="nom_or_name">Nom or Name</string>
+    <string name="prenom_or_surname">Prenom or Surname</string>
+    <string name="matricule_or_registration_number">Matricule or Registration number</string>
+    <string name="fili_re_or_course">Filière or Course</string>
+    <string name="niveau_or_level">Niveau or Level</string>
+    <string name="adresse_mail_or_mail_adress">Adresse mail or Mail Adress</string>
+    <string name="mot_de_passe">Mot de passe</string>
+    <string name="verification_mot_passe_or_check_password">Verification mot passe or Check password</string>
+    <string name="mot_de_passe_or_password">Mot de passe or Password</string>
+    <string name="entrez_les_param_tres_de_traitermentde_la_requ_te">Entrez les paramètres de traiterment de la requête</string>
+    <string name="nom_enseignant">Nom enseignant</string>
+    <string name="nom_etudiant">Nom étudiant</string>
+    <string name="matricule_etudiant">Matricule étudiant</string>
+    <string name="niveau">Niveau</string>
+    <string name="entrez_votre_login_ou_matricule">Entrez votre login </string>
+    <string name="motif_choisir_1_pour_note_cc_2_note_tpe_3_note_examen">Motif (Choisir 1 pour note CC, 2 note TPE)</string>
+    <string name="motif_choisir_1_pour_le_nom_2_le_prenom_3_la_dob">Motif (choisir 1 pour le nom, 2 le prenom, 3 la DoB)</string>
+
+    <string-array name="listfiliere">
+        <item> Allemand </item>
+        <item>Arabe</item>
+        <item>Chimie</item>
+        <item> Chinois </item>
+        <item>Conseillers d/’orientation </item>
+        <item>Espagnol</item>
+        <item> Info-Fonda </item>
+        <item>TIC</item>
+        <item>Italien</item>
+        <item> LMA </item>
+        <item>LMB</item>
+        <item>LMF</item>
+        <item>  Mathematiques</item>
+        <item>Physique</item>
+        <item>Sciences de l/’education</item>
+        <item> SVT </item>
+    </string-array>
+    <string-array name="listniveau">
+        <item> I </item>
+        <item>II</item>
+        <item>III</item>
+        <item> IV </item>
+        <item> V </item>
+    </string-array>
+    <string-array name="listmotif">
+        <item> 1 </item>
+        <item>2</item>
+    </string-array>
+    <string-array name="listgrade">
+        <item> Assistant </item>
+        <item> Charge de cours</item>
+        <item> Maitre de conference</item>
+        <item> Professeur</item>
+    </string-array>
+
+
 </resources>

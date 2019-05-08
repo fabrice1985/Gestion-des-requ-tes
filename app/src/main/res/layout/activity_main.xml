@@ -7,7 +7,7 @@
     tools:context=".MainActivity"
     android:orientation="vertical"
     android:paddingLeft = "40dp"
-    android:background="#30D181">
+    android:background="#ffffff">
 
     <TextView
         android:layout_width="wrap_content"
@@ -15,26 +15,43 @@
         android:text="Connectez vous"
         android:textColor="#000000"
         android:textSize="40dp"
+        android:textStyle="italic"
         android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/entrez_votre_login_ou_matricule"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:layout_marginTop = "25dp"
+        android:textStyle="italic" />
     <EditText
         android:id = "@+id/txtLogin"
         android:layout_width ="match_parent"
-        android:layout_marginTop = "25dp"
         android:ems = "10"
         android:hint = "@string/login"
         android:inputType = "text"
         android:selectAllOnFocus = "true"
         android:layout_height="wrap_content"
         android:textColor="#000000"
+        android:textStyle="italic"
         android:textSize="25sp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entrez votre mot de passe"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:textStyle="italic" />
     <EditText
         android:id ="@+id/txtPwd"
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:ems = "10"
-        android:hint = "@string/mot_passe"
+        android:hint = "@string/mot_de_passe_or_password"
         android:inputType = "textPassword"
         android:textColor="#000000"
+        android:textStyle="italic"
         android:textSize="25sp"/>
 
     <Button
@@ -42,15 +59,19 @@
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:text = "Connexion"
-        android:textSize="25dp"
+        android:textSize="25sp"
+        android:layout_marginTop="20sp"
         android:layout_gravity="center_horizontal"/>
     <Button
         android:id = "@+id/btnInscription"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:text = "S'inscrire"
-        android:textSize="25dp"
+        android:layout_marginTop="25sp"
+        android:textSize="25sp"
         android:layout_gravity="center_horizontal"/>
+
+
 
 
 </LinearLayout>

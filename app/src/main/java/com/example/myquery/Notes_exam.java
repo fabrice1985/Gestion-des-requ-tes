@@ -1,5 +1,6 @@
 package com.example.myquery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,8 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import myqueryServices.TreatTeachers;
-import myquerymodel.Teachers;
+import myqueryServices.Interface_Note_Exam;
+import myquerymodel.Exam_Notes;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -20,47 +21,41 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class TraitementEnseignant extends AppCompatActivity {
+public class Notes_exam extends AppCompatActivity {
 
-    private Button btntraitement;
-    private String motif;
-    private EditText nom_enseignant;
-    private EditText nom_etudiant;
+    private Button btnrequetenote;
+    private String pseudo = "";
+    private EditText nom;
     private String filiere;
-    private EditText note_traiter;
-    //private EditText note_v;
-    private EditText UE;
-    private EditText matricule;
     private String niveau;
+    private EditText note_a;
+    private EditText note_v;
+    private EditText UE;
     private String url = "http://192.168.8.100/MyQueryPHP/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_traitement_enseignant);
+        setContentView(R.layout.activity_notes_exam);
+        Intent intent = getIntent();
+        pseudo = intent.getStringExtra("pseudo");
+        // récuperation des vues
+
         //motif = (EditText)findViewById(R.id.txtmotif);
-        nom_enseignant =(EditText)findViewById(R.id.txtnomenseignant);
-        matricule = (EditText)findViewById(R.id.txtmatricule);
+        nom =(EditText)findViewById(R.id.txtname);
+        //pseudo = (EditText)findViewById(R.id.txtmatricule);
         //filiere = (EditText)findViewById(R.id.txtfiliere);
-        note_traiter =(EditText)findViewById(R.id.txtnotetraiter);
-        //note_v = (EditText)findViewById(R.id.txtnote_v);
+        note_a =(EditText)findViewById(R.id.txtnote_a);
+        note_v = (EditText)findViewById(R.id.txtnote_v);
         UE = (EditText)findViewById(R.id.txtue);
-        nom_etudiant = (EditText)findViewById(R.id.txtnometudiant);
         //niveau = (EditText)findViewById(R.id.txtniveau);
-        Spinner spinnermotif = findViewById(R.id.spinnermotif);
-        ArrayAdapter<CharSequence> adaptermotif = ArrayAdapter.createFromResource(this, R.array.listmotif,android.R.layout.simple_spinner_item);
-        adaptermotif.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnermotif.setAdapter(adaptermotif);
-        spinnermotif.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        btnrequetenote = (Button)findViewById(R.id.btnrequetenote);
+        btnrequetenote.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                motif = parent.getItemAtPosition(position).toString();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                verifierSichampnonvide();
             }
         });
+        // recuperation des listes
         Spinner spinnerfiliere = findViewById(R.id.spinnerfiliere);
         ArrayAdapter<CharSequence> adapterfiliere = ArrayAdapter.createFromResource(this, R.array.listfiliere,android.R.layout.simple_spinner_item);
         adapterfiliere.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -92,52 +87,39 @@ public class TraitementEnseignant extends AppCompatActivity {
 
             }
         });
-        btntraitement = (Button)findViewById(R.id.btntraitement);
-        btntraitement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verifierSichampnonvide();
-            }
-        });
     }
-
     public void verifierSichampnonvide(){
 
-        if ((nom_enseignant.getText().length()==0)||(nom_etudiant.getText().length()==0)||(motif.length()==0)||(filiere.length()==0)||
-                (note_traiter.getText().length()==0)||(UE.getText().length()==0)||(matricule.getText().length()==0)){
+        if ((nom.getText().length()==0)||(filiere.length()==0)|| (note_a.getText().length()==0)||
+                (note_v.getText().length()==0)||(UE.getText().length()==0)||(niveau.length()==0)){
             Toast.makeText(this,"certain(s) champ(s) sont vides veuillez remplir tous les champs",Toast.LENGTH_LONG).show();
-            nom_enseignant.getText().clear();
-            //motif.getText().clear();
-
-            nom_etudiant.getText().clear();
-            //filiere.getText().clear();
-            note_traiter.getText().clear();
-            //note_v.getText().clear();
+            nom.getText().clear();
+            note_a.getText().clear();
+            note_v.getText().clear();
             UE.getText().clear();
-            matricule.getText().clear();
+
             //return false;
         }
-        else if ((Float.parseFloat(note_traiter.getText().toString()))>= 0
-                &&(Float.parseFloat(note_traiter.getText().toString()))<=20 ){
-            Teachers teachers = new Teachers(motif,
-                    matricule.getText().toString(),
-                    nom_etudiant.getText().toString(),
+        else if  ((Integer.parseInt(note_a.getText().toString()))>= 0 && (Integer.parseInt(note_a.getText().toString()))<=20
+                &&(Integer.parseInt(note_v.getText().toString()))>=0 && (Integer.parseInt(note_v.getText().toString()))<=20){
+            Exam_Notes exam_notes = new Exam_Notes(pseudo,
+                    nom.getText().toString(),
                     filiere,
                     niveau,
-                    note_traiter.getText().toString(),
-                    UE.getText().toString(),
-                    nom_enseignant.getText().toString());
-                    envoyerParamNotes(teachers);
+                    note_a.getText().toString(),
+                    note_v.getText().toString(),
+                    UE.getText().toString());
+            envoyerParamNotes(exam_notes);
             Toast.makeText(this,"le motif et les notes sont valables",Toast.LENGTH_LONG).show();
         }
         else {
-            Toast.makeText(this,"note non valable entrer une note comprise entre 0 et 20 ",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"le motif ou les notes ne sont pas valables",Toast.LENGTH_LONG).show();
             //motif.getText().clear();
-            //note_v.getText().clear();
-            note_traiter.getText().clear();
+            note_v.getText().clear();
+            note_a.getText().clear();
         }
     }
-    public void envoyerParamNotes(Teachers teachers){
+    public void envoyerParamNotes(Exam_Notes exam_notes){
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
@@ -152,22 +134,22 @@ public class TraitementEnseignant extends AppCompatActivity {
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
-        TreatTeachers client = retrofit.create(TreatTeachers.class);
-        Call<Teachers> call = client.teachersTreat(teachers);
+        Interface_Note_Exam client = retrofit.create(Interface_Note_Exam.class);
+        Call<Exam_Notes> call = client.registerExam(exam_notes);
         //Toast.makeText(this,"URL envoyée",Toast.LENGTH_LONG).show();
-        call.enqueue(new Callback<Teachers>() {
+        call.enqueue(new Callback<Exam_Notes>() {
             @Override
-            public void onResponse(Call<Teachers> call, Response<Teachers> response) {
+            public void onResponse(Call<Exam_Notes> call, Response<Exam_Notes> response) {
                 if (response.isSuccessful()){
-                    Toast.makeText(TraitementEnseignant.this,"user matricule",Toast.LENGTH_LONG).show();}
+                    Toast.makeText(Notes_exam.this,"user matricule",Toast.LENGTH_LONG).show();}
                 else {
-                    Toast.makeText(TraitementEnseignant.this,"problème",Toast.LENGTH_LONG).show();
+                    Toast.makeText(Notes_exam.this,"problème",Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<Teachers> call, Throwable t) {
-                Toast.makeText(TraitementEnseignant.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+            public void onFailure(Call<Exam_Notes> call, Throwable t) {
+                Toast.makeText(Notes_exam.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
             }
         });
     }

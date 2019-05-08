@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/traiterparenseignant"
+    <item android:id="@+id/traiterpardes"
         android:title="Traiter requête"/>
 
     <item android:id="@+id/consulter"
-        android:title="Consuter requête"/>
+        android:title="Consulter requête"/>
 
     <item android:id="@+id/deconnecter"
         android:title="Deconnexion" />
