@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.UserRequeteNotes;
 import myquerymodel.Notes;
+import myquerymodel.NullOnEmptyConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -152,12 +156,17 @@ public class RequetesNotes extends AppCompatActivity {
             } else {
                 httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
             }
-
             OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
             httpClient.addInterceptor(httpLoggingInterceptor);
             // créons une instance de retrofit
-            Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create());
+            Gson gson = new GsonBuilder()
+                    .setLenient()
+                    .create();
+            Retrofit.Builder builder = new Retrofit.Builder()
+                                       .baseUrl(url)
+                                       .client(httpClient.build())
+                                       .addConverterFactory(new NullOnEmptyConverterFactory())
+                                       .addConverterFactory(GsonConverterFactory.create(gson));
             Retrofit retrofit = builder.build();
             UserRequeteNotes client = retrofit.create(UserRequeteNotes.class);
             Call<Notes> call = client.queryNotes(notes);
@@ -165,16 +174,15 @@ public class RequetesNotes extends AppCompatActivity {
             call.enqueue(new Callback<Notes>() {
                 @Override
                 public void onResponse(Call<Notes> call, Response<Notes> response) {
-                    if (response.isSuccessful()){
-                        Toast.makeText(RequetesNotes.this,"user matricule",Toast.LENGTH_LONG).show();}
-                    else {
-                        Toast.makeText(RequetesNotes.this,"problème",Toast.LENGTH_LONG).show();
-                    }
+                    //if (response.isSuccessful()){
+                        Toast.makeText(RequetesNotes.this,"user matricule",Toast.LENGTH_LONG).show();
+                   // }
+
                 }
 
                 @Override
                 public void onFailure(Call<Notes> call, Throwable t) {
-                    Toast.makeText(RequetesNotes.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+                    Toast.makeText(RequetesNotes.this,t.getMessage(),Toast.LENGTH_LONG).show();
                 }
             });
         }

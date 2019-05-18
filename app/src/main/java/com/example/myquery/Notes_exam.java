@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.Interface_Note_Exam;
-import myquerymodel.Exam_Notes;
+import myquerymodel.NoteExam;
+import myquerymodel.NullOnEmptyConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -102,7 +106,7 @@ public class Notes_exam extends AppCompatActivity {
         }
         else if  ((Integer.parseInt(note_a.getText().toString()))>= 0 && (Integer.parseInt(note_a.getText().toString()))<=20
                 &&(Integer.parseInt(note_v.getText().toString()))>=0 && (Integer.parseInt(note_v.getText().toString()))<=20){
-            Exam_Notes exam_notes = new Exam_Notes(pseudo,
+            NoteExam exam_notes = new NoteExam(pseudo,
                     nom.getText().toString(),
                     filiere,
                     niveau,
@@ -119,7 +123,7 @@ public class Notes_exam extends AppCompatActivity {
             note_a.getText().clear();
         }
     }
-    public void envoyerParamNotes(Exam_Notes exam_notes){
+    public void envoyerParamNotes(NoteExam exam_notes){
 
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         if (BuildConfig.DEBUG) {
@@ -127,29 +131,32 @@ public class Notes_exam extends AppCompatActivity {
         } else {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         }
-
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
         // créons une instance de retrofit
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create());
+                .client(httpClient.build())
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         Interface_Note_Exam client = retrofit.create(Interface_Note_Exam.class);
-        Call<Exam_Notes> call = client.registerExam(exam_notes);
+        Call<NoteExam> call = client.registerExam(exam_notes);
         //Toast.makeText(this,"URL envoyée",Toast.LENGTH_LONG).show();
-        call.enqueue(new Callback<Exam_Notes>() {
+        call.enqueue(new Callback<NoteExam>() {
             @Override
-            public void onResponse(Call<Exam_Notes> call, Response<Exam_Notes> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(Notes_exam.this,"user matricule",Toast.LENGTH_LONG).show();}
-                else {
-                    Toast.makeText(Notes_exam.this,"problème",Toast.LENGTH_LONG).show();
-                }
+            public void onResponse(Call<NoteExam> call, Response<NoteExam> response) {
+                //if (response.isSuccessful()){
+                    Toast.makeText(Notes_exam.this,"user matricule",Toast.LENGTH_LONG).show();
+            //}
+
             }
 
             @Override
-            public void onFailure(Call<Exam_Notes> call, Throwable t) {
-                Toast.makeText(Notes_exam.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+            public void onFailure(Call<NoteExam> call, Throwable t) {
+                Toast.makeText(Notes_exam.this,t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

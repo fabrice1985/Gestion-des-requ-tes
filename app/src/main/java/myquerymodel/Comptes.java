@@ -1,26 +1,21 @@
 package myquerymodel;
 
-public class User {
-
+public class Comptes {
     private String pseudo;
     private String nom;
     private String prenom;
     private String filiere;
     private String niveau;
-    private String adressmail;
-    private String password;
-   // private String password1;
+    private String date_inscription;
 
-    public User (String pseudo, String nom, String prenom, String filiere, String niveau, String adressmail, String password){
+    public Comptes(String pseudo, String nom, String prenom, String filiere, String niveau, String date_inscription) {
         this.pseudo = pseudo;
         this.nom = nom;
-        this.prenom= prenom;
+        this.prenom = prenom;
         this.filiere = filiere;
         this.niveau = niveau;
-        this.adressmail = adressmail;
-        this.password = password;
+        this.date_inscription = date_inscription;
     }
-    public String resultat;
 
     public String getPseudo() {
         return pseudo;
@@ -33,6 +28,7 @@ public class User {
     public String getNom() {
         return nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
@@ -61,22 +57,11 @@ public class User {
         this.niveau = niveau;
     }
 
-    public String getAdressmail() {
-        return adressmail;
+    public String getDate_inscription() {
+        return date_inscription;
     }
 
-    public void setAdressmail(String adressmail) {
-        this.adressmail = adressmail;
+    public void setDate_inscription(String date_inscription) {
+        this.date_inscription = date_inscription;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-
 }

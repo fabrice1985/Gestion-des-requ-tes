@@ -10,9 +10,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.UserClient;
+import myquerymodel.NullOnEmptyConverterFactory;
 import myquerymodel.User;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,8 +33,7 @@ public class Inscription extends AppCompatActivity  {
     private EditText pseudo1;
     private EditText nom1;
     private EditText prenom1;
-   // private EditText filiere1;
-   //  private EditText niveau1;
+    private TextView text;
     private EditText adressmail1;
     private EditText password2;
     private EditText password1;
@@ -51,6 +55,7 @@ public class Inscription extends AppCompatActivity  {
         adressmail1 = (EditText)findViewById(R.id.txtadress);
         password2 = (EditText)findViewById(R.id.txtPwd1);
         password1 = (EditText)findViewById(R.id.txtPwd2);
+        text = (TextView)findViewById(R.id.txtresponse);
         btnInscription1 = (Button)findViewById(R.id.btnInscription1);
         // recuperation de la liste deroulante pour les filieres
         Spinner spinnerfiliere = findViewById(R.id.spinnerfiliere);
@@ -144,13 +149,6 @@ public class Inscription extends AppCompatActivity  {
             adressmail = adressmail1.getText().toString();
             password = password2.getText().toString();
             User user = new User(pseudo,nom,prenom,filiere,niveau,adressmail,password);
-            /*User user = new User (pseudo1.getText().toString(),
-                                  nom1.getText().toString(),
-                                  prenom1.getText().toString(),
-                                  filiere1.getText().toString(),
-                                  niveau1.getText().toString(),
-                                  adressmail1.getText().toString(),
-                                  password2.getText().toString());*/
                                   envoyerParamEtudiant(user);
             Toast.makeText(this,"bravo les mots de passe sont identiques "+ nom1.getText().toString(),Toast.LENGTH_LONG).show();
 
@@ -170,32 +168,28 @@ public class Inscription extends AppCompatActivity  {
         } else {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         }
-
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
-       // créons une instance de retrofit
+        // créons une instance de retrofit
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
                 .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         UserClient client = retrofit.create(UserClient.class);
         Call<User> call = client.createAccount(user);
-        //Toast.makeText(this,"URL envoyée",Toast.LENGTH_LONG).show();
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(Inscription.this, "user matricule", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(Inscription.this, "reponse non OK", Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(Inscription.this,"Okay",Toast.LENGTH_LONG).show();
             }
 
-
-               @Override
+            @Override
             public void onFailure(Call<User> call, Throwable t) {
-
-             Toast.makeText(Inscription.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+                Toast.makeText(Inscription.this,t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

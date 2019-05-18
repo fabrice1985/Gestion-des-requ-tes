@@ -1,6 +1,6 @@
 package myquerymodel;
 
-public class Exam_Notes {
+public class NoteExam {
 
     private String Matricule;
     private String Nom;
@@ -10,7 +10,7 @@ public class Exam_Notes {
     private String Note_valable;
     private String UE;
 
-    public Exam_Notes(String matricule, String nom, String filiere, String niveau, String note_attribue, String note_valable, String UE) {
+    public NoteExam(String matricule, String nom, String filiere, String niveau, String note_attribue, String note_valable, String UE) {
         Matricule = matricule;
         Nom = nom;
         Filiere = filiere;

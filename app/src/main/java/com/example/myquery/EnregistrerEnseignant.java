@@ -10,8 +10,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.ParamTeacher;
 import myquerymodel.DataTeacher;
+import myquerymodel.NullOnEmptyConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -113,9 +117,13 @@ public class EnregistrerEnseignant extends AppCompatActivity {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
         // créons une instance de retrofit
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
                 .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         ParamTeacher client = retrofit.create(ParamTeacher.class);
         Call<DataTeacher> call = client.registerTeacher(dataTeacher);
@@ -123,18 +131,16 @@ public class EnregistrerEnseignant extends AppCompatActivity {
         call.enqueue(new Callback<DataTeacher>() {
             @Override
             public void onResponse(Call<DataTeacher> call, Response<DataTeacher> response) {
-                if (response.isSuccessful()) {
+               // if (response.isSuccessful()) {
                     Toast.makeText(EnregistrerEnseignant.this, "user matricule", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(EnregistrerEnseignant.this, "reponse non OK", Toast.LENGTH_LONG).show();
-                }
+               // }
             }
 
 
             @Override
             public void onFailure(Call<DataTeacher> call, Throwable t) {
 
-                Toast.makeText(EnregistrerEnseignant.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+                Toast.makeText(EnregistrerEnseignant.this, t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

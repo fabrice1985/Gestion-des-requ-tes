@@ -8,6 +8,8 @@ public class ParamConnexion {
         this.pseudo = pseudo;
         this.password = password;
     }
+    public String level;
+    public String echec;
 
     public String getPseudo() {
         return pseudo;

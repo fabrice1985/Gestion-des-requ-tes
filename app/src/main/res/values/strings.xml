@@ -29,6 +29,7 @@
     <string name="entrez_votre_login_ou_matricule">Entrez votre login </string>
     <string name="motif_choisir_1_pour_note_cc_2_note_tpe_3_note_examen">Motif (Choisir 1 pour note CC, 2 note TPE)</string>
     <string name="motif_choisir_1_pour_le_nom_2_le_prenom_3_la_dob">Motif (choisir 1 pour le nom, 2 le prenom, 3 la DoB)</string>
+    <string name="type_de_compte_1_etudiant_2_enseignant_3_dess">Type de compte (1 Etudiant, 2 Enseignant, 3 DESS)</string>
 
     <string-array name="listfiliere">
         <item> Allemand </item>
@@ -37,6 +38,8 @@
         <item> Chinois </item>
         <item>Conseillers d/’orientation </item>
         <item>Espagnol</item>
+        <item>Geographie</item>
+        <item>Histoire</item>
         <item> Info-Fonda </item>
         <item>TIC</item>
         <item>Italien</item>
@@ -45,7 +48,7 @@
         <item>LMF</item>
         <item>  Mathematiques</item>
         <item>Physique</item>
-        <item>Sciences de l/’education</item>
+        <item>Sciences de l\’education</item>
         <item> SVT </item>
     </string-array>
     <string-array name="listniveau">
@@ -58,6 +61,11 @@
     <string-array name="listmotif">
         <item> 1 </item>
         <item>2</item>
+    </string-array>
+    <string-array name="listcompte">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
     <string-array name="listgrade">
         <item> Assistant </item>

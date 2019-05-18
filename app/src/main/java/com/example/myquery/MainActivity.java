@@ -3,14 +3,19 @@ package com.example.myquery;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.Connexion;
+import myquerymodel.NullOnEmptyConverterFactory;
 import myquerymodel.ParamConnexion;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnConnexion;
     private EditText login;
     private EditText password;
+    private TextView text;
     private String url = "http://192.168.8.100/MyQueryPHP/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         btnConnexion = (Button)findViewById(R.id.btnConnexion);
         login = (EditText)findViewById(R.id.txtLogin);
         password = (EditText)findViewById(R.id.txtPwd);
+        text = (TextView)findViewById(R.id.txtresponse);
         // Se connecter à l'activité de création de compte_etudiant
         btnInscription.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,11 +88,6 @@ public class MainActivity extends AppCompatActivity {
             ParamConnexion paramconnexion = new ParamConnexion(login.getText().toString(),
                                                                 password.getText().toString());
              envoyerParamConnexion(paramconnexion);
-             String pseudo = login.getText().toString();
-             Intent intent = new Intent(MainActivity.this, Compte_Enseignant.class);
-             intent.putExtra("pseudo",pseudo);
-             startActivity(intent);
-
 
         }
     }
@@ -97,13 +99,16 @@ public class MainActivity extends AppCompatActivity {
         } else {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.NONE);
         }
-
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
         // créons une instance de retrofit
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
                 .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         Connexion client = retrofit.create(Connexion.class);
         Call<ParamConnexion> call = client.createConnexion(paramconnexion);
@@ -111,18 +116,50 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<ParamConnexion>() {
             @Override
             public void onResponse(Call<ParamConnexion> call, Response<ParamConnexion> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, "user matricule", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "reponse non OK", Toast.LENGTH_LONG).show();
+                ParamConnexion paramconnexion = response.body();
+                String returnedResponse = paramconnexion.level;
+                ParamConnexion paramconnexion1 = response.body();
+                String returnedResponse1 = paramconnexion1.echec;
+                //text.setText("Erreur");
+                if(returnedResponse.trim().equals("1")){
+                    // redirect to Main Activity page
+                    text.setText(returnedResponse);
+                    Intent loginIntent = new Intent(MainActivity.this, Compte_Etudiant.class);
+                    String pseudo = login.getText().toString();
+                    loginIntent.putExtra("pseudo",pseudo);
+                    startActivity(loginIntent);
+                }
+                else if(returnedResponse.trim().equals("2")){
+                    // redirect to Main Activity page
+                    Intent loginIntent = new Intent(MainActivity.this, Compte_Enseignant.class);
+                    String pseudo = login.getText().toString();
+                    loginIntent.putExtra("pseudo",pseudo);
+                    startActivity(loginIntent);
+                }
+                else if(returnedResponse.trim().equals("3")){
+                    // redirect to Main Activity page
+                    Intent loginIntent = new Intent(MainActivity.this, Compte_DES.class);
+                    String pseudo = login.getText().toString();
+                    loginIntent.putExtra("pseudo",pseudo);
+                    startActivity(loginIntent);
+                }
+                else if(returnedResponse.trim().equals("4")){
+                    // redirect to Main Activity page
+                    Intent loginIntent = new Intent(MainActivity.this, Compte_Administrateur.class);
+                    //loginIntent.putExtra("EMAIL", email);
+                    startActivity(loginIntent);
+                }
+                else {
+                    text.setText(returnedResponse1);
+                    Toast.makeText(MainActivity.this, returnedResponse1, Toast.LENGTH_LONG).show();
                 }
             }
 
 
             @Override
             public void onFailure(Call<ParamConnexion> call, Throwable t) {
-
-                Toast.makeText(MainActivity.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+                text.setText(t.getMessage());
+                //Toast.makeText(MainActivity.this, t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -11,7 +11,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.OthersrequestInterface;
+import myquerymodel.NullOnEmptyConverterFactory;
 import myquerymodel.Othersrequest;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -132,8 +136,13 @@ public class AutreRequete extends AppCompatActivity {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
         // créons une instance de retrofit
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create());
+                .client(httpClient.build())
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         OthersrequestInterface client = retrofit.create(OthersrequestInterface.class);
         Call<Othersrequest> call = client.sendOthers(othersrequest);
@@ -141,16 +150,15 @@ public class AutreRequete extends AppCompatActivity {
         call.enqueue(new Callback<Othersrequest>() {
             @Override
             public void onResponse(Call<Othersrequest> call, Response<Othersrequest> response) {
-                if (response.isSuccessful()){
-                    Toast.makeText(AutreRequete.this,"user matricule",Toast.LENGTH_LONG).show();}
-                else {
-                    Toast.makeText(AutreRequete.this,"problème",Toast.LENGTH_LONG).show();
-                }
+                //if (response.isSuccessful()){
+                    Toast.makeText(AutreRequete.this,"user matricule",Toast.LENGTH_LONG).show();
+               // }
+
             }
 
             @Override
             public void onFailure(Call<Othersrequest> call, Throwable t) {
-                Toast.makeText(AutreRequete.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+                Toast.makeText(AutreRequete.this, t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }

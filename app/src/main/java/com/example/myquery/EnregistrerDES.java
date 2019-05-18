@@ -7,8 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import myqueryServices.ParamDES;
 import myquerymodel.DataDES;
+import myquerymodel.NullOnEmptyConverterFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -66,9 +70,13 @@ public class EnregistrerDES extends AppCompatActivity {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(httpLoggingInterceptor);
         // créons une instance de retrofit
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(url)
                 .client(httpClient.build())
-                .addConverterFactory(GsonConverterFactory.create());
+                .addConverterFactory(new NullOnEmptyConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit = builder.build();
         ParamDES client = retrofit.create(ParamDES.class);
         Call<DataDES> call = client.registerDES(dataDES);
@@ -76,18 +84,16 @@ public class EnregistrerDES extends AppCompatActivity {
         call.enqueue(new Callback<DataDES>() {
             @Override
             public void onResponse(Call<DataDES> call, Response<DataDES> response) {
-                if (response.isSuccessful()) {
+               // if (response.isSuccessful()) {
                     Toast.makeText(EnregistrerDES.this, "user matricule", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(EnregistrerDES.this, "reponse non OK", Toast.LENGTH_LONG).show();
-                }
+               // }
             }
 
 
             @Override
             public void onFailure(Call<DataDES> call, Throwable t) {
 
-                Toast.makeText(EnregistrerDES.this, "Un problème est survenue",Toast.LENGTH_LONG).show();
+                Toast.makeText(EnregistrerDES.this,t.getMessage(),Toast.LENGTH_LONG).show();
             }
         });
     }
